@@ -42,7 +42,7 @@ const SlotMachine: React.FC = () => {
 
     const renderSymbol = (symbol: string) => {
         const imageSrc = symbolImages[symbol];
-        return imageSrc ? <img src={imageSrc} alt={symbol} className="w-[24px] h-[24px]" /> : <div>{symbol}</div>;
+        return imageSrc ? <img src={imageSrc} alt={symbol} className="w-[24px] h-[24px] m-auto" /> : <div>{symbol}</div>;
     };
 
     const totalWinnings = spinResult?.wins.reduce((total, win) => total + win.payout, 0) || 0;
