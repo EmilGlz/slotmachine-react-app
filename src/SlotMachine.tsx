@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SpinResult } from './types';
 import symbolImages from './symbols';
+import { serverUrl } from './urls';
 
 const paytable = [
     { symbol: 'sym1', three: 1, four: 2, five: 3 },
@@ -22,7 +23,7 @@ const SlotMachine: React.FC = () => {
         setIsSpinning(true);
 
         try {
-            const response = await fetch('https://localhost:7185/api/Slot/Run', {
+            const response = await fetch(serverUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
