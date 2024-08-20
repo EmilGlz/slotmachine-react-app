@@ -47,28 +47,33 @@ const SlotMachine: React.FC = () => {
     };
 
     const totalWinnings = spinResult?.wins.reduce((total, win) => total + win.payout, 0) || 0;
-    
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
             <h1 className="text-4xl font-bold mb-8">Slot Machine</h1>
 
             <div className="grid grid-cols-5 gap-4 mb-8">
-                {spinResult && spinResult.screen.flat().map((symbol, index) => (
-                    <img
+                {spinResult && spinResult.screen.flat().map((symbol, index) => {
+                    const isWinningPosition = spinResult.wins.some(win =>
+                        win.winningPositions.includes(index)
+                    );
+
+                    return (<img
                         key={index}
-                        src={`/slotImages/${symbol}.png`} // Assuming the images are named after the symbols
+                        src={`/slotImages/${symbol}.png`}
                         alt={symbol}
-                        className="w-16 h-16 border-2 border-gray-700 rounded-md"
-                    />
-                ))}
+                        className={`w-16 h-16 border-2 rounded-md ${
+                            isWinningPosition ? 'border-yellow-300' : 'border-gray-700'
+                          }`}
+                    />)
+                })}
             </div>
 
-            <button 
-                onClick={handleSpin} 
+            <button
+                onClick={handleSpin}
                 disabled={isSpinning}
-                className={`px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 ${
-                    isSpinning ? 'bg-gray-700 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
-                }`}
+                className={`px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 ${isSpinning ? 'bg-gray-700 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700'
+                    }`}
             >
                 {isSpinning ? 'Spinning...' : 'Run'}
             </button>
@@ -99,7 +104,6 @@ const SlotMachine: React.FC = () => {
                 </div>
             )}
 
-            {/* Paytable Modal */}
             {showPaytable && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg w-1/2">
